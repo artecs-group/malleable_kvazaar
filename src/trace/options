@@ -1,0 +1,19 @@
+1;                                                                     --target_fps 24
+2;--preset=medium         --gop lp-g1d1t1 --ref 1 --threads  1 --owf 8 --target_fps 24
+3;--preset=medium         --gop lp-g1d1t1 --ref 1 --threads  4 --owf 8 --target_fps 24
+4;--preset=medium         --gop lp-g1d1t1 --ref 1 --threads  8 --owf 8 --target_fps 24
+5;--preset=medium         --gop lp-g1d1t1 --ref 1 --threads 16 --owf 8 --target_fps 24
+6;--preset=medium         --gop lp-g1d1t1 --ref 1 --threads 28 --owf 8 --target_fps 24
+7;--preset=medium         --gop lp-g1d1t1 --ref 1 --threads 56 --owf 8 --target_fps 24
+8;--preset=medium --qp 32 --gop lp-g1d1t1 --ref 1 --threads  1 --owf 8 --target_fps 24
+9;--preset=medium --qp 32 --gop lp-g1d1t1 --ref 1 --threads  4 --owf 8 --target_fps 24
+10;--preset=medium --qp 32 --gop lp-g1d1t1 --ref 1 --threads  8 --owf 8 --target_fps 24
+11;--preset=medium --qp 32 --gop lp-g1d1t1 --ref 1 --threads 16 --owf 8 --target_fps 24
+12;--preset=medium --qp 32 --gop lp-g1d1t1 --ref 1 --threads 28 --owf 8 --target_fps 24
+13;--preset=medium --qp 32 --gop lp-g1d1t1 --ref 1 --threads 56 --owf 8 --target_fps 24
+14;--preset=ultrafast                              --threads  1 --owf 8 --target_fps 24
+15;--preset=ultrafast                              --threads  4 --owf 8 --target_fps 24
+16;--preset=ultrafast                              --threads  8 --owf 8 --target_fps 24
+17;--preset=ultrafast                              --threads 16 --owf 8 --target_fps 24
+18;--preset=ultrafast                              --threads 28 --owf 8 --target_fps 24
+19;--preset=ultrafast                              --threads 56 --owf 8 --target_fps 24

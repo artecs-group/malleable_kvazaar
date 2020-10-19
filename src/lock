@@ -1,0 +1,6 @@
+./stats.c:121:    if (pthread_mutex_init(&stats->lock, NULL) != 0) {
+./stats.c:126:    KVZ_GET_TIME(&stats->encoding_start_real_time);
+./stats.c:127:    stats->target_fps = target_fps;
+./stats.c:128:    stats->frames_sofar = 0;
+./stats.c:129:    stats->fps_sofar = 0;
+./stats.c:153:    if (pthread_mutex_destroy(&stats->lock) != 0) {
