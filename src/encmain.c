@@ -513,7 +513,8 @@ int main(int argc, char *argv[])
     {
 
 	KVZ_GET_TIME(&encoding_start_real_time);
-
+	stats_start_encoding(encoder->stats, encoding_start_real_time);
+	
 	encoding_start_cpu_time = clock();
 
 	uint64_t bitstream_length = 0;
@@ -587,7 +588,7 @@ int main(int argc, char *argv[])
 	    
 	    /*@ @*/
 	    //ask for the new number of threads
-	    int nTh = helper_readNumThreads();
+	    int nTh = helper_readNumThreads(encoder->stats);
 	    {
 		PTHREAD_LOCK(&encoder->threadqueue->lock);
 		encoder->threadqueue->thread_max_active = nTh;
@@ -597,7 +598,7 @@ int main(int argc, char *argv[])
 		
 	    /* frame_encoding_start_cpu_time = clock(); */
 	    KVZ_GET_TIME(&frame_encoding_start_real_time);
-	    stats_start_frame(encoder->stats, frame_encoding_end_real_time);
+	    stats_start_frame(encoder->stats, frame_encoding_start_real_time);
 	    
 	    
 	    kvz_data_chunk* chunks_out = NULL;
@@ -730,7 +731,8 @@ int main(int argc, char *argv[])
 	} //end - for(;;)
 
 	KVZ_GET_TIME(&encoding_end_real_time);
-
+	stats_end_encoding(encoder->stats, encoding_end_real_time);
+	
 	encoding_end_cpu_time = clock();
 	// Coding finished
 

@@ -32,6 +32,7 @@
 #include "threads.h"
 #include "threadqueue.h"
 
+
 struct threadqueue_queue_t {
     pthread_mutex_t lock;
 
@@ -125,7 +126,8 @@ stats_t * kvz_stats_init(threadqueue_queue_t* threadqueue)
     stats->batchSize = (txt==NULL) ? 24 : atoi (txt);
 
     stats->framesDone = 0;
-
+    stats->nThs = 0;
+    
     KVZ_GET_TIME(&stats->encoding_start_real_time);
     
     return stats;
@@ -161,13 +163,13 @@ void kvz_stats_free(stats_t *stats)
 
 void stats_start_frame (stats_t *stats, KVZ_CLOCK_T timestamp){
     if(stats->framesDone==0 || stats->framesDone % stats->batchSize==0)
-	stats->encoding_start_last_batch = timestamp;
+    	stats->encoding_start_last_batch = timestamp;
 }
 
 
 void stats_end_frame (stats_t *stats, KVZ_CLOCK_T timestamp){
-    
-    const int frames_done = (++stats->framesDone);
+    stats->framesDone++;
+    const int frames_done = stats->framesDone;
     
     if( (frames_done >= stats->batchSize) && (frames_done%stats->batchSize == 0) )
 	helper_printBatchInfo (stats, timestamp);
@@ -185,16 +187,20 @@ void stats_end_encoding (stats_t *stats, KVZ_CLOCK_T timestamp){
 
 /*@ ------ @*/
 
-int helper_readNumThreads(){
+int helper_readNumThreads(stats_t *stats){
+
+    if(stats->framesDone!=0 && stats->framesDone % stats->batchSize != 0)
+        return stats->nThs;
 
     int nThs=-1;
-    int ret=0;
-
-    while((ret=fscanf(stdin, "nThs:%d\n", &nThs))!=1){
+    int ret;
+    if((ret=fscanf(stdin, "nThs:%d%*c", &nThs))!=1){
 	perror ("Error reading N. threads. Wrong format\n");
+	return stats->nThs;
+    } else{
+      stats->nThs = nThs;
+      return nThs;
     }
-    
-    return nThs;
 }
 
 
@@ -216,11 +222,11 @@ void helper_printBatchInfo(stats_t *stats, KVZ_CLOCK_T timestamp){
 	KVZ_CLOCK_T_NS_AS_LONG_LONG(timestamp) - 
 	KVZ_CLOCK_T_NS_AS_LONG_LONG(stats->encoding_start_last_batch);
 
-    
+  
     int nFrames = (stats->framesDone % stats->batchSize);
     if(nFrames == 0) nFrames=stats->batchSize;
-    
-    long double fps = (nFrames * 1.0) / time;
+
+    long double fps = (nFrames * 1.0) / (time*1e-9);
     
     fprintf (stdout, "FPS:%Lf\n", fps);
 }
@@ -232,7 +238,7 @@ void helper_printProcessInfo(stats_t *stats){
 	KVZ_CLOCK_T_NS_AS_LONG_LONG(stats->encoding_end_real_time) - 
 	KVZ_CLOCK_T_NS_AS_LONG_LONG(stats->encoding_start_real_time);
     
-    long double fps = (stats->framesDone * 1.0) / time;
+    long double fps = (stats->framesDone * 1.0) / (time*1e-9);
     
     fprintf (stdout, "Overall_FPS:%Lf\n", fps);
 }

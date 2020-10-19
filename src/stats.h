@@ -44,6 +44,8 @@ typedef struct stats_t {
     
     int batchSize;
     int framesDone;
+
+    int nThs;
 } stats_t;
 
 typedef struct threadqueue_queue_t threadqueue_queue_t;
@@ -59,7 +61,7 @@ void stats_start_frame (stats_t *stats, KVZ_CLOCK_T timestamp);
 void stats_end_frame (stats_t *stats, KVZ_CLOCK_T timestamp);
 
 /*@ ------ @*/
-int helper_readNumThreads();
+int helper_readNumThreads(stats_t *stats);
 int helper_readQP();
 
 //Prints the information of the last batch encoded
