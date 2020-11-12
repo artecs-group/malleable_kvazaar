@@ -155,6 +155,8 @@ void kvz_stats_free(stats_t *stats)
     /* 	helper_printBatchInfo(stats); */
     
     fprintf (stdout, "END\n");
+    fflush (stdout);
+    
     helper_printProcessInfo(stats);
     
     FREE_POINTER(stats);
@@ -229,6 +231,7 @@ void helper_printBatchInfo(stats_t *stats, KVZ_CLOCK_T timestamp){
     long double fps = (nFrames * 1.0) / (time*1e-9);
     
     fprintf (stdout, "FPS:%Lf\n", fps);
+    fflush (stdout);
 }
 
 
@@ -241,4 +244,5 @@ void helper_printProcessInfo(stats_t *stats){
     long double fps = (stats->framesDone * 1.0) / (time*1e-9);
     
     fprintf (stdout, "Overall_FPS:%Lf\n", fps);
+    fflush (stdout);
 }
