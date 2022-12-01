@@ -42,3 +42,6 @@ nThs:8
 END
 Overall_FPS:9.908793
 ```
+
+# Acknowledgements
+This work was partially supported by the EU (FEDER) and Spanish MINECO (TIN2015-65277-R, RTI2018-093684-B-I00), Spanish MECD (GA. No. FPU15/02050), CM (S2018/TCS-4423), and the Complutense University under grant GA. No. PR65/19-22445
